@@ -1,5 +1,6 @@
 import PhoneItem from "@/app/_components/phone-item";
 import ServiceItem from "@/app/_components/service-item";
+import SidebarSheet from "@/app/_components/sidebar-sheet";
 import { Button } from "@/app/_components/ui/button";
 import { Sheet, SheetTrigger } from "@/app/_components/ui/sheet";
 import { db } from "@/app/_lib/prisma";
@@ -59,9 +60,11 @@ const BarbershopPage = async ({ params }: BarbershopPageProps) => {
               <MenuIcon />
             </Button>
           </SheetTrigger>
+          <SidebarSheet />
         </Sheet>
       </div>
 
+      {/* TITULO */}
       <div className="border-b border-solid p-5">
         <h1 className="mb-3 text-xl font-bold">{barbershop.name}</h1>
         <div className="mb-2 flex items-center gap-2">
@@ -75,11 +78,13 @@ const BarbershopPage = async ({ params }: BarbershopPageProps) => {
         </div>
       </div>
 
+      {/* DESCRICAO */}
       <div className="space-y-2 border-b border-solid p-5">
         <h2 className="text-xs font-bold uppercase text-gray-400">Sobre nós</h2>
-        <p className="text-justify text-sm">{barbershop.description}</p>
+        <p className="text-justify text-sm">{barbershop?.description}</p>
       </div>
 
+      {/* SERVICOS */}
       <div className="space-y-3 border-b border-solid p-5">
         <h2 className="text-xs font-bold uppercase text-gray-400">Serviços</h2>
         <div className="space-y-3">
@@ -89,6 +94,7 @@ const BarbershopPage = async ({ params }: BarbershopPageProps) => {
         </div>
       </div>
 
+      {/* CONTATOS */}
       <div className="space-y-3 p-5">
         {barbershop.phones.map((phone) => (
           <PhoneItem key={phone} phone={phone} />
