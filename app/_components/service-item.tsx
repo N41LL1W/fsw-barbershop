@@ -44,4 +44,5 @@ const ServiceItem = ({ service }: ServiceItemProps) => {
     </Card>
   );
 };
+
 export default ServiceItem;
