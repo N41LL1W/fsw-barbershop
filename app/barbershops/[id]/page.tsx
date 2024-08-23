@@ -1,6 +1,5 @@
 import Header from "@/app/_components/header";
 import BarbershopItem from "@/app/_components/barbershop-item";
-//import Header from "../_components/header"
 import Search from "@/app/_components/search";
 import { db } from "@/app/_lib/prisma";
 
