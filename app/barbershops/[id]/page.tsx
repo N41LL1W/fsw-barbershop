@@ -1,107 +1,63 @@
-import PhoneItem from "@/app/_components/phone-item";
-import ServiceItem from "@/app/_components/service-item";
-import SidebarSheet from "@/app/_components/sidebar-sheet";
-import { Button } from "@/app/_components/ui/button";
-import { Sheet, SheetTrigger } from "@/app/_components/ui/sheet";
+import Header from "@/app/_components/header";
+import BarbershopItem from "@/app/_components/barbershop-item";
+//import Header from "../_components/header"
+import Search from "@/app/_components/search";
 import { db } from "@/app/_lib/prisma";
-import { ChevronLeftIcon, MapPinIcon, MenuIcon, StarIcon } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
-import { notFound } from "next/navigation";
 
-interface BarbershopPageProps {
-  params: {
-    id: string;
+interface BarbershopsPageProps {
+  searchParams: {
+    title?: string;
+    service?: string;
   };
 }
 
-const BarbershopPage = async ({ params }: BarbershopPageProps) => {
-  const barbershop = await db.barbershop.findUnique({
+const BarbershopsPage = async ({ searchParams }: BarbershopsPageProps) => {
+  const barbershops = await db.barbershop.findMany({
     where: {
-      id: params.id,
-    },
-    include: {
-      services: true,
+      OR: [
+        searchParams?.title
+          ? {
+              name: {
+                contains: searchParams?.title,
+                mode: "insensitive",
+              },
+            }
+          : {},
+        searchParams.service
+          ? {
+              services: {
+                some: {
+                  name: {
+                    contains: searchParams.service,
+                    mode: "insensitive",
+                  },
+                },
+              },
+            }
+          : {},
+      ],
     },
   });
 
-  if (!barbershop) {
-    return notFound();
-  }
-
   return (
     <div>
-      <div className="relative h-[250px] w-full">
-        <Image
-          alt={barbershop.name}
-          src={barbershop.imageUrl}
-          fill
-          className="object-cover"
-        />
-
-        <Button
-          size="icon"
-          variant="secondary"
-          className="absolute left-4 top-4"
-          asChild
-        >
-          <Link href="/">
-            <ChevronLeftIcon />
-          </Link>
-        </Button>
-
-        <Sheet>
-          <SheetTrigger asChild>
-            <Button
-              size="icon"
-              variant="outline"
-              className="absolute right-4 top-4"
-            >
-              <MenuIcon />
-            </Button>
-          </SheetTrigger>
-          <SidebarSheet />
-        </Sheet>
+      <Header />
+      <div className="my-6 px-5">
+        <Search />
       </div>
-
-      {/* TITULO */}
-      <div className="border-b border-solid p-5">
-        <h1 className="mb-3 text-xl font-bold">{barbershop.name}</h1>
-        <div className="mb-2 flex items-center gap-2">
-          <MapPinIcon className="text-primary" size={18} />
-          <p className="text-sm">{barbershop.address}</p>
-        </div>
-
-        <div className="flex items-center gap-2">
-          <StarIcon className="fill-primary text-primary" size={18} />
-          <p className="text-sm">5,0 (499 avaliações)</p>
-        </div>
-      </div>
-
-      {/* DESCRICAO */}
-      <div className="space-y-2 border-b border-solid p-5">
-        <h2 className="text-xs font-bold uppercase text-gray-400">Sobre nós</h2>
-        <p className="text-justify text-sm">{barbershop?.description}</p>
-      </div>
-
-      {/* SERVICOS */}
-      <div className="space-y-3 border-b border-solid p-5">
-        <h2 className="text-xs font-bold uppercase text-gray-400">Serviços</h2>
-        <div className="space-y-3">
-          {barbershop.services.map((service) => (
-            <ServiceItem key={service.id} service={service} />
+      <div className="px-5">
+        <h2 className="mb-3 mt-6 text-xs font-bold uppercase text-gray-400">
+          Resultados para &quot;{searchParams?.title || searchParams?.service}
+          &quot;
+        </h2>
+        <div className="grid grid-cols-2 gap-4">
+          {barbershops.map((barbershop) => (
+            <BarbershopItem key={barbershop.id} barbershop={barbershop} />
           ))}
         </div>
-      </div>
-
-      {/* CONTATOS */}
-      <div className="space-y-3 p-5">
-        {barbershop.phones.map((phone) => (
-          <PhoneItem key={phone} phone={phone} />
-        ))}
       </div>
     </div>
   );
 };
 
-export default BarbershopPage;
+export default BarbershopsPage;
