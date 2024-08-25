@@ -21,11 +21,13 @@ Este projeto tem como objetivo criar uma aplicação para facilitar a busca por 
 - **Adição do Header e Banner**: O componente `Header` e um banner foram adicionados para melhorar a apresentação visual da aplicação.
 - **Implementação da Sidebar**: Uma barra lateral foi criada para facilitar a navegação entre as diferentes seções da aplicação.
 - **Adição do Footer e PhoneItems**: O rodapé e os componentes `PhoneItems` foram integrados ao layout, aprimorando a organização e a navegabilidade.
+- **Adição do SidebarSheet**: Um componente `SidebarSheet` foi adicionado para melhorar a navegação interna.
 
 ### 5. Desenvolvimento das Funcionalidades Principais
 - **Criação da Página de Barbearias**: Foi implementada uma página para exibir as barbearias disponíveis, onde os usuários podem ver detalhes e serviços oferecidos.
 - **Implementação da Pesquisa Rápida**: A funcionalidade de pesquisa rápida foi adicionada, permitindo aos usuários encontrar barbearias de maneira mais eficiente.
 - **Exibição dos Serviços das Barbearias**: A página da barbearia foi configurada para mostrar os serviços oferecidos, proporcionando informações completas aos usuários.
+- **Busca por Barbearias**: A funcionalidade de busca foi ampliada para permitir que os usuários pesquisem por barbearias com base no nome e nos serviços.
 
 ### 6. Gerenciamento de Reservas
 - **Criação do Componente BookingItem**: Foi adicionado o componente `BookingItem` para gerenciar a exibição de itens de reserva, facilitando a interação dos usuários com o sistema de reservas.
@@ -36,4 +38,4 @@ Este projeto tem como objetivo criar uma aplicação para facilitar a busca por 
 
 ---
 
-Com este passo a passo, é possível entender a evolução do projeto e como as diferentes funcionalidades e melhorias foram implementadas ao longo do tempo.
+Este passo a passo reflete todas as melhorias e funcionalidades implementadas, proporcionando uma visão clara do desenvolvimento contínuo do projeto.
